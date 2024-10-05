@@ -28,3 +28,14 @@
   right: 10px;
   cursor: pointer;
 }
+
+footer {
+  position: "relative";
+}
+
+footer > h4 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: "100%";
+}

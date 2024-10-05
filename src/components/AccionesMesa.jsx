@@ -25,11 +25,24 @@ export const AccionesMesa = ({ number }) => {
       console.log(error);
     }
   };
+  const handleMesa = async (number, action) => {
+    const urlMesa = `https://localhost/restaurante/${action}`; // 'action' puede ser 'closeservice' o 'openservice'
+    const dataMesa = { mesa: parseInt(number) };
 
-  const handleCerrarMesa = () => {
-    // Lógica para cerrar la mesa
-    // Puedes implementar la lógica que necesites aquí
-    console.log(`Cerrando la mesa ${number}`);
+    try {
+      const response = await fetch(urlMesa, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataMesa),
+      });
+      let data = await response.json();
+      let statusTable = data.status;
+      setEstado(statusTable);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -39,7 +52,7 @@ export const AccionesMesa = ({ number }) => {
           <button
             type="button"
             className="btn btn-danger d-block mb-3"
-            onClick={handleCerrarMesa}
+            onClick={() => handleMesa(number, "closeservice")}
           >
             Cerrar Mesa
           </button>
@@ -47,7 +60,11 @@ export const AccionesMesa = ({ number }) => {
           <Menu></Menu>
         </div>
       ) : (
-        <button type="button" className="btn btn-success">
+        <button
+          type="button"
+          className="btn btn-success"
+          onClick={() => handleMesa(number, "openservice")}
+        >
           Abrir Mesa
         </button>
       )}
