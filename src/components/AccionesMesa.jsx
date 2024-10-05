@@ -25,31 +25,58 @@ export const AccionesMesa = ({ number }) => {
       console.log(error);
     }
   };
+  const handleMesa = async (number, action) => {
+    const urlMesa = `https://localhost/restaurante/${action}`; // 'action' puede ser 'closeservice' o 'openservice'
+    const dataMesa = { mesa: parseInt(number) };
 
-  const handleCerrarMesa = () => {
-    // Lógica para cerrar la mesa
-    // Puedes implementar la lógica que necesites aquí
-    console.log(`Cerrando la mesa ${number}`);
+    try {
+      const response = await fetch(urlMesa, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataMesa),
+      });
+      let data = await response.json();
+      let statusTable = data.status;
+      setEstado(statusTable);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
-    <div className="container mt-3 d-flex justify-content-center">
+    <div className="container mt-3">
       {estado === "open" ? (
-        <div className="text-center">
+        <div className=" row text-center d-flex justify-content-center">
           <button
             type="button"
             className="btn btn-danger d-block mb-3"
-            onClick={handleCerrarMesa}
+            onClick={() => handleMesa(number, "closeservice")}
+            style={{ width: "200px" }}
           >
             Cerrar Mesa
           </button>
-          <Consumido mesa={number} />
-          <Menu></Menu>
+
+          {/* Contenedor fijo para mantener la posición */}
+          <div className=" row text-center d-flex justify-content-center">
+            <Consumido mesa={number} />
+          </div>
+          <div className=" row text-center d-flex justify-content-center">
+            <Menu mesa={number}></Menu>
+          </div>
         </div>
       ) : (
-        <button type="button" className="btn btn-success">
-          Abrir Mesa
-        </button>
+        <div className="row text-center d-flex justify-content-center">
+          <button
+            type="button"
+            className="btn btn-success d-block mb-3"
+            onClick={() => handleMesa(number, "openservice")}
+            style={{ width: "200px" }}
+          >
+            Abrir Mesa
+          </button>
+        </div>
       )}
     </div>
   );

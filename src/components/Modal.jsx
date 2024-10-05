@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 export const Modal = ({ mesa, producto, onClose }) => {
-  const [cantidad, setCantidad] = useState(1);
-
+  const [cantidad, setCantidad] = useState();
+  console.log(`mesa: ${mesa}`);
   const handlePedido = async () => {
     const url = `https://localhost/restaurante/addproduct`;
     const data = {
@@ -18,7 +18,7 @@ export const Modal = ({ mesa, producto, onClose }) => {
       },
       body: JSON.stringify(data),
     });
-
+    console.log(data);
     const result = await response.json();
     if (response.status === 201 || result.status === "success") {
       console.log("Pedido realizado con éxito.");

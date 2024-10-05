@@ -8,7 +8,7 @@ export const ListadoMesas = ({ number, setMesaATrabajar }) => {
   const escogeMesa = (e) => {
     let nroMesa = parseInt(e.target.value);
     setMesaATrabajar(nroMesa);
-    setTable(nroMesa); // Actualiza el estado en App
+    setTable(nroMesa);
   };
 
   // Generar las mesas en un bucle 'for'
@@ -31,7 +31,9 @@ export const ListadoMesas = ({ number, setMesaATrabajar }) => {
     <div className="container mt-3">
       <div className="row d-flex justify-content-evenly">{mesas}</div>
       <div>
-        <p className="text-center mt-2">Está trabajando con la mesa {table}</p>
+        <h4 className="text-center mt-4">
+          Está trabajando con la mesa {table}
+        </h4>
       </div>
     </div>
   );

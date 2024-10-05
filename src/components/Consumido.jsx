@@ -11,6 +11,7 @@ export const Consumido = ({ mesa }) => {
         `https://localhost/restaurante/verproductos/${parseInt(mesa)}`
       );
       const data = await response.json();
+      console.log(data);
       if (data.status === "success") {
         setPedido(data.message); // Guardamos el objeto completo del mensaje.
       } else {
@@ -29,11 +30,42 @@ export const Consumido = ({ mesa }) => {
 
   const handleClick = () => {
     setVerPedido((prev) => !prev);
+    fetchPedido();
+  };
+
+  const handleDelete = async (mesa, producto) => {
+    try {
+      const dataAEnviar = {
+        mesa: parseInt(mesa),
+        id_producto: parseInt(producto),
+        cantidad: 1,
+      };
+      const urlDelete = "https://localhost/restaurante/deleteproduct";
+      const response = await fetch(urlDelete, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataAEnviar),
+      });
+      console.log(dataAEnviar);
+      const data = await response.json();
+
+      console.log(data);
+      fetchPedido();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <>
-      <button type="button" className="btn btn-primary" onClick={handleClick}>
+      <button
+        type="button"
+        className="btn btn-primary mb-3"
+        onClick={handleClick}
+        style={{ width: "200px" }}
+      >
         {verPedido ? "Ocultar Productos" : "Ver Productos"}
       </button>
 
@@ -60,7 +92,10 @@ export const Consumido = ({ mesa }) => {
                     <td>{item.precioUnit}</td>
                     <td>{item.total_producto}</td>
                     <td>
-                      <button className="btn btn-primary">
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => handleDelete(mesa, item.id_producto)}
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
