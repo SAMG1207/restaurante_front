@@ -60,7 +60,12 @@ export const Consumido = ({ mesa }) => {
 
   return (
     <>
-      <button type="button" className="btn btn-primary" onClick={handleClick}>
+      <button
+        type="button"
+        className="btn btn-primary mb-3"
+        onClick={handleClick}
+        style={{ width: "200px" }}
+      >
         {verPedido ? "Ocultar Productos" : "Ver Productos"}
       </button>
 

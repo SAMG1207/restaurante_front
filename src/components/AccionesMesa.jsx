@@ -46,27 +46,37 @@ export const AccionesMesa = ({ number }) => {
   };
 
   return (
-    <div className="container mt-3 d-flex justify-content-center">
+    <div className="container mt-3">
       {estado === "open" ? (
-        <div className="text-center">
+        <div className=" row text-center d-flex justify-content-center">
           <button
             type="button"
             className="btn btn-danger d-block mb-3"
             onClick={() => handleMesa(number, "closeservice")}
+            style={{ width: "200px" }}
           >
             Cerrar Mesa
           </button>
-          <Consumido mesa={number} />
-          <Menu></Menu>
+
+          {/* Contenedor fijo para mantener la posición */}
+          <div className=" row text-center d-flex justify-content-center">
+            <Consumido mesa={number} />
+          </div>
+          <div className=" row text-center d-flex justify-content-center">
+            <Menu mesa={number}></Menu>
+          </div>
         </div>
       ) : (
-        <button
-          type="button"
-          className="btn btn-success"
-          onClick={() => handleMesa(number, "openservice")}
-        >
-          Abrir Mesa
-        </button>
+        <div className="row text-center d-flex justify-content-center">
+          <button
+            type="button"
+            className="btn btn-success d-block mb-3"
+            onClick={() => handleMesa(number, "openservice")}
+            style={{ width: "200px" }}
+          >
+            Abrir Mesa
+          </button>
+        </div>
       )}
     </div>
   );

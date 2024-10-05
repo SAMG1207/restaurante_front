@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ProductoCard } from "./ProductoCard";
 import { Modal } from "./Modal";
 
-export const Menu = () => {
+export const Menu = ({ mesa }) => {
   const [verMenu, setVerMenu] = useState(false);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -69,14 +69,19 @@ export const Menu = () => {
 
   return (
     <>
-      <div className="row text-center">
-        <button type="button" className="btn btn-primary" onClick={handleMenu}>
+      <div className="text-center">
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={handleMenu}
+          style={{ width: "200px" }}
+        >
           {verMenu ? "Ocultar Menú" : "Ver Menú"}
         </button>
       </div>
 
       {verMenu && (
-        <div className="row">
+        <div className="row mt-3">
           {categorias.map((categoria) => (
             <div key={categoria.key} className="col-md-4">
               <h3>{categoria.nombre}</h3>
@@ -86,7 +91,7 @@ export const Menu = () => {
                   <ProductoCard
                     key={producto.id_producto}
                     producto={producto}
-                    onOpenModal={handleOpenModal} // Cambiado a onOpenModal
+                    onOpenModal={handleOpenModal} // Solo pasamos el producto
                   />
                 ))
               ) : (
@@ -101,7 +106,7 @@ export const Menu = () => {
       {showModal && (
         <Modal
           producto={productoSeleccionado}
-          mesa={1} // O el número de mesa correspondiente
+          mesa={mesa} // Usamos la prop mesa aquí
           onClose={handleCloseModal}
         />
       )}
